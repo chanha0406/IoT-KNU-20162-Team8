@@ -18,7 +18,7 @@ typedef struct _list
 
 void init(list* lptr);
 void insert(list* lptr, char* value, int position);
-int search(list* lptr, char* value);
+void search(list* lptr, char* value);
 void print_list(list* lptr);
 
 int main()
@@ -30,12 +30,12 @@ int main()
 
 	if (f == NULL)
 	{
-	          printf("½ºÆ®¸² »ı¼º½Ã ¿À·ù¹ß»ı\n");
+	          printf("ìŠ¤íŠ¸ë¦¼ ìƒì„±ì‹œ ì˜¤ë¥˜ë°œìƒ\n");
 	          return 1;
 	}
 	else
 	{
-		printf("ÆÄÀÏ ¿­±â ¼º°ø\n");
+		printf("íŒŒì¼ ì—´ê¸° ì„±ê³µ\n");
 	}
 
 	while(1)
@@ -53,7 +53,7 @@ int main()
 
 	while(1)
 	{
-		printf("°Ë»öÇÒ ´Ü¾î¸¦ ÀÔ·ÂÇÏ¼¼¿ä. (Á¾·á:0) : ");
+		printf("ê²€ìƒ‰í•  ë‹¨ì–´ë¥¼ ì…ë ¥í•˜ì„¸ìš”. (ì¢…ë£Œ:0) : ");
 		scanf("%s",tmp);
 		if (strcmp(tmp,"0"))
 			search(mylist, tmp);
@@ -72,7 +72,7 @@ void insert(list* lptr, char* value, int position)
 {
 	if(position < 1 || position > (lptr -> count)+1)
 	{
-		printf("À§Ä¡ ¹üÀ§ ¿¡·¯\n");
+		printf("ìœ„ì¹˜ ë²”ìœ„ ì—ëŸ¬\n");
 		return;
 	}
 	nptr new_nptr = (node*)malloc(sizeof(node));
@@ -100,37 +100,48 @@ void insert(list* lptr, char* value, int position)
 	lptr->count++;
 }
 
-int search(list* lptr, char* value)
+void search(list* lptr, char* value)
 {
 	nptr tmp = lptr->head;
-	int i=1;
+	int i=1, cnt=0;
+	printf("%sì€(ëŠ”) ",value);
 	while(tmp != NULL)
 	{
-		if(!strcmp(value,tmp->value)) break;
+		if(!strcmp(value,tmp->value))
+			{
+				cnt++;
+				if (cnt == 1)
+				{
+					printf("listì˜ %dë²ˆì§¸",i);
+				}
+				else
+				{
+					printf(", %dë²ˆì§¸",i);
+				}
+			}
 		i++;
 		tmp = tmp->next;
 	}
-	if(i>lptr->count)
+
+	if(cnt == 0)
 	{
-		printf("%sÀÌ(°¡) Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.\n",value);
-		return 0;
+		printf("listì— ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.\n",value);
 	}
 	else
 	{
-		printf("%sÀº(´Â) listÀÇ %d¹øÂ°¿¡ Á¸ÀçÇÕ´Ï´Ù.\n",value,i);
-		return i;
+		printf("ì— ì¡´ì¬í•˜ë©°, %dê°œ ì¡´ì¬í•©ë‹ˆë‹¤.\n",cnt);
 	}
 }
 
 void print_list(list* lptr)
 {
 	nptr tmp = lptr -> head;
-	printf("list °ª : ");
+	printf("list ê°’ : ");
 	while(tmp!=NULL)
 	{
 		printf("%s ", tmp -> value);
 		tmp = tmp -> next;
 	}
 	printf("\n");
-	printf("list¿¡ %d°³ÀÇ °ªÀÌ(°¡) ÀÖ½À´Ï´Ù.\n", lptr->count);
+	printf("listì— %dê°œì˜ ê°’ì´(ê°€) ìˆìŠµë‹ˆë‹¤.\n", lptr->count);
 }
